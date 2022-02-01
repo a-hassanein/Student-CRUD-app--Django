@@ -1,65 +1,84 @@
 {% extends 'navbar.html' %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
     {% load static %}
     {% block css %}
-        <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
     {% endblock css %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
+
+    {% block title %}
+    <title>Home</title>
+    {% endblock title %}
 <body>
 
     {% block content %}
     <h1>Home page</h1>
     <div class="content"  >
+    <form method="post">
+        {% csrf_token %}
     <div class="row">
     <div class="col-7">
     <div class="mb-3">
-        <label for="exampleInputName" class="form-label">Name</label>
-        <input type="text" class="form-control" id="exampleInputName" aria-describedby="NameHelp">
+        <label for="exampleInputName" class="form-label">Student Name</label>
+        <input type="text" class="form-control" id="exampleInputName" name="studentname">
     </div>
 
     <div class="mb-3">
-        <label for="exampleInputAge" class="form-label">Age</label>
-        <input type="text" class="form-control" id="exampleInputAge">
+        <label for="exampleInputAge" class="form-label">Student Age</label>
+        <input type="text" class="form-control" id="exampleInputAge" name="studentage">
     </div>
 
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <input type="email" class="form-control" id="exampleInputEmail1" name="studentemail">
     </div>
 
     <div class="mb-3">
         <label for="exampleInputTrack_Name" class="form-label">Track Name</label>
-        <input type="text" class="form-control" id="exampleInputTrack_Name">
+        <input type="text" class="form-control" id="exampleInputTrack_Name" name="trackname">
     </div>
+        <div><p style="color:green">{{doneMsg}}</p></div>
     </div>
-
     <div class="col-5">
-        <button type="button" class="btn btn-secondary" >Insert Student</button>
-        <button type="button" class="btn btn-success" >Update Student</button>
-        <button type="button" class="btn btn-danger" >Delete Student</button>
-        <button type="button" class="btn btn-warning" >Select Student</button>
-        <button type="button" class="btn btn-info" >Search by Student name</button>
+    <button type="submit" class="btn btn-secondary">Insert Student</button>
+    <button type="button" class="btn btn-success" >Update Student</button>
+    <button type="button" class="btn btn-danger" >Delete Student</button>
+    <button type="button" class="btn btn-warning" >Select Student</button>
+    <button type="button" class="btn btn-info" >Search by Student name</button>
     </div>
     </div>
+    </form>
     </div>
-<!--    <style>-->
-<!--        button{-->
-<!--        width:100%;-->
-<!--        padding: 20px;-->
-<!--        margin :10px;-->
-<!--        }-->
 
-<!--        .content{-->
-<!--            background:#ff0;-->
-<!--            padding: 20px-->
-<!--        }-->
-<!--</style>-->
+        {%if students%}
+    <div class="container mt-5">
+    <h2>Students</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Student Age</th>
+              <th scope="col">Email address</th>
+              <th scope="col">Track Name</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in students %}
+            <tr>
+              <th scope="row">{{student.id}}</th>
+              <td>{{student.studentname}}</td>
+              <td>{{student.studentemail}}</td>
+              <td>{{student.studentage}}</td>
+              <td>{{student.trackname}}</td>
+              <td>
+
+              </td>
+            </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+    </div>
+    {%endif%}
     {% endblock content %}
 </body>
 </html>
