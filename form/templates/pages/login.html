@@ -7,22 +7,23 @@
 {% block title %}
 <title>Login</title>
 {% endblock title %}
-<body>
+
+
 {% block content %}
 <h1>Login page</h1>
 <form method="post">
     {% csrf_token %}
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" name="userEmail">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" name="userPass">
-  </div>
+
+<!--    <label for="exampleInputEmail1" class="form-label">User Name</label>-->
+    <input type="email" class="form-control" id="exampleInputEmail1" name="loginemail">
+  <br>
+
+<!--    <label for="exampleInputPassword1" class="form-label">Password</label>-->
+    <input type="password" class="form-control" id="exampleInputPassword1" name="loginpass">
+<br>
     <div><p style="color:red">{{msg}}</p></div>
   <button type="submit" class="btn btn-primary">Login</button>
 </form>
 {% endblock content %}
-</body>
+
 

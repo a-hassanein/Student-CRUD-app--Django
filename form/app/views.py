@@ -11,31 +11,64 @@ def mylogout(request):
 def home(request):
     return render(request, 'pages/home.html')
 
+
+# def signup(request):
+#     context = {}
+#     if (request.method == 'GET'):
+#         return render(request, 'pages/signup.html')
+#
+#     else:
+#         # Myuser.objects.create(myusername=request.POST['myusername'], userPass=request.POST)
+#         myuser = Myuser.objects.create(myusername=request.POST.get('myussername'), userPass=request.POST.get('signupPass'), userEmail=request.POST.get('signupEmail'))
+#         print(myuser.myusername)
+#         User.objects.create_user(username=request.POST['myussername'], password=request.POST['signupPass'], is_staff=True)
+#         return render(request, 'pages/login.html')
+
+def signup(request):
+    if (request.method == 'GET'):
+        return render(request, 'pages/signup.html')
+    else:
+        username = request.POST['myussername']
+        email = request.POST['signupEmail']
+        password = request.POST['signupPass']
+        Myuser.objects.create(myusername=username, userEmail=email, userPass=password)
+        User.objects.create_user(username, email, password, is_staff=True)
+        return redirect("login")
+
+# def login(request):
+#     if (request.method == 'GET'):
+#         return render(request, 'pages/login.html')
+#
+#     else:
+#         user = Myuser.objects.filter(userPass=request.POST.get('loginpass'), myusername=request.POST.get('loginname'))
+#         authuser = authenticate(username=request.POST['loginname'], userPass=request.POST['loginpass'])
+#         if ( len(user) > 0  and authuser is not None):
+#             request.session['username'] = request.POST['loginname']
+#             authlogin(request, authuser)
+#             return render(request, 'pages/home.html')
+#         else:
+#             context = {}
+#             context['msg'] = 'Invalid username or password'
+#             return render(request, 'pages/login.html', context)
+
 def login(request):
     if (request.method == 'GET'):
         return render(request, 'pages/login.html')
+    elif(request.method == 'POST'):
+        email = request.POST['loginemail']
+        password = request.POST['loginpass']
+        print(email, "  Password ", password)
+        try:
+            user = Myuser.objects.get(userEmail=email, userPass=password)
+            admin_user = authenticate(username=user.myusername, password=password)
+            if user and admin_user is not None:
+                request.session['username'] = user.myusername
+                authlogin(request, admin_user)
+                return redirect('/')
+        except Myuser.DoesNotExist:
+            return redirect("login")
 
-    else:
-        user = Myuser.objects.filter(userPass=request.POST['userPass'], userEmail=request.POST['userEmail'])
-        authuser = authenticate(userEmail=request.POST['userEmail'], userPass=request.POST['userPass'])
-        if ( len(user) > 0  and authuser is not None):
-            request.session['username'] = request.POST['username']
-            authlogin(request, authuser)
-            return render(request, 'pages/home.html')
-        else:
-            context = {}
-            context['msg'] = 'Invalid username or password'
-            return render(request, 'pages/login.html', context)
 
-def signup(request):
-    context = {}
-    if (request.method == 'GET'):
-        return render(request, 'pages/signup.html')
-
-    else:
-        Myuser.objects.create(username=request.POST['username'], userPass=request.POST['userPass'], userEmail=request.POST['userEmail'])
-        # User.objects.create_user(username=request.POST['myusername'], userPass=request.POST['userPass'], is_staff=True)
-        return render(request, 'pages/login.html')
 
 def insert_student(request):
     context = {}

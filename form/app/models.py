@@ -11,6 +11,6 @@ class Student(models.Model):
 
 class Myuser(models.Model):
     id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=100, null=False)
-    userEmail = models.EmailField(max_length=100)
-    userPass = models.CharField(max_length=15)
+    myusername = models.CharField(max_length=100, null=True)
+    userEmail = models.EmailField(max_length=100, null=True)
+    userPass = models.CharField(max_length=15, null=True)

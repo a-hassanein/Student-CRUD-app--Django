@@ -6,5 +6,6 @@ button{
 
 .content{
             background:rgb(235, 235, 235);
-            padding: 20px
+            padding: 20px;
+            width: 50%;
 }

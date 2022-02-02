@@ -8,24 +8,24 @@
       <title>Signup</title>
 {% endblock title %}
 
-<body>
+
 {% block content %}
 <h1>Signup page</h1>
 <form method="post">
     {% csrf_token %}
-  <div class="mb-3">
-    <label for="myusernameID" class="form-label">User Name</label>
-    <input type="text" class="form-control" id="myusernameID" name="username">
-  </div>
-  <div class="mb-3">
-    <label for="userEmailID" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="userEmailID" name="userEmail">
-  </div>
-  <div class="mb-3">
-    <label for="userPassID" class="form-label">Password</label>
-    <input type="password" class="form-control" id="userPassID" name="userPass">
-  </div>
+
+<!--    <label for="myusernameID" class="form-label">User Name</label>-->
+    <input type="text" class="form-control" name="myussername">
+<br>
+
+<!--    <label for="userEmailID" class="form-label">Email address</label>-->
+    <input type="email" class="form-control" name="signupEmail">
+
+<br>
+<!--    <label for="userPassID" class="form-label">Password</label>-->
+    <input type="password" class="form-control" name="signupPass">
+<br>
   <button type="submit" class="btn btn-success">Sign Up</button>
 </form>
 {% endblock content %}
-</body>
+

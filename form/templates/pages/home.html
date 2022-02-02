@@ -7,7 +7,7 @@
     {% block title %}
     <title>Home</title>
     {% endblock title %}
-<body>
+
 
     {% block content %}
     <h1>Home page</h1>
@@ -16,37 +16,34 @@
         {% csrf_token %}
     <div class="row">
     <div class="col-7">
-    <div class="mb-3">
-        <label for="exampleInputName" class="form-label">Student Name</label>
+
+<!--        <label for="exampleInputName" class="form-label">Student Name</label>-->
         <input type="text" class="form-control" id="exampleInputName" name="studentname">
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleInputAge" class="form-label">Student Age</label>
-        <input type="text" class="form-control" id="exampleInputAge" name="studentage">
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" name="studentemail">
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleInputTrack_Name" class="form-label">Track Name</label>
-        <input type="text" class="form-control" id="exampleInputTrack_Name" name="trackname">
-    </div>
+<!--        <label for="exampleInputAge" class="form-label">Student Age</label>-->
+        <input type="text" class="form-control" name="studentage">
+
+
+
+<!--        <label for="exampleInputEmail1" class="form-label">Email address</label>-->
+        <input type="email" class="form-control" name="studentemail">
+
+<!--        <label for="exampleInputTrack_Name" class="form-label">Track Name</label>-->
+        <input type="text" class="form-control"  name="trackname">
+
         <div><p style="color:green">{{doneMsg}}</p></div>
     </div>
     <div class="col-5">
     <button type="submit" class="btn btn-secondary" >Insert Student</button>
     <a type="button" class="btn btn-success" href="{%url 'list'%}">Update Student</a>
     <a type="button" class="btn btn-danger" href="{%url 'list'%}">Delete Student</a>
-    <a type="button" class="btn btn-warning" href="{%url 'list'%}">Select Student</a>
-    <a type="button" class="btn btn-info" href="/list">Search by Student name</a>
+    <a type="button" class="btn btn-warning" href="{%url 'list'%}">list Student</a>
+<!--    <a type="button" class="btn btn-info" href="/list">Search by Student name</a>-->
     </div>
     </div>
     </form>
     </div>
 
     {% endblock content %}
-</body>
