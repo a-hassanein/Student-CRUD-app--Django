@@ -1,0 +1,42 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block css %}
+      <link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock css %}
+
+{% block title %}
+      <title>sudents</title>
+{% endblock title %}
+<body>
+{%block content%}
+<table class="maintable">
+    <tr>
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Track</th>
+        <th>Delete record</th>
+        <th>update record</th>
+
+
+    </tr>
+    {%for student in students%}
+    <tr>
+        <td>{{student.id}}</td>
+        <td>{{student.studentname}}</td>
+        <td>{{student.trackname}}</td>
+        <td>
+                   <a href="{%url 'delete' student.id %}">Delete</a>
+        </td>
+        <td>
+            <form action="{%url 'update' student.id%}" method="post">
+                {%csrf_token%}
+                <input name="newstudentname" type="text">
+                <input type="submit" value="update">
+            </form>
+        </td>
+    </tr>
+    {%endfor%}
+</table>
+
+{%endblock%}
+</body>

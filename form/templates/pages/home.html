@@ -39,46 +39,14 @@
     </div>
     <div class="col-5">
     <button type="submit" class="btn btn-secondary" >Insert Student</button>
-    <button type="button" class="btn btn-success" >Update Student</button>
-    <button type="button" class="btn btn-danger" >Delete Student</button>
-    <button type="button" class="btn btn-warning" >Select Student</button>
-    <button type="button" class="btn btn-info" >Search by Student name</button>
+    <a type="button" class="btn btn-success" href="{%url 'list'%}">Update Student</a>
+    <a type="button" class="btn btn-danger" href="{%url 'list'%}">Delete Student</a>
+    <a type="button" class="btn btn-warning" href="{%url 'list'%}">Select Student</a>
+    <a type="button" class="btn btn-info" href="/list">Search by Student name</a>
     </div>
     </div>
     </form>
     </div>
 
-        {%if students%}
-    <div class="container mt-5">
-    <h2>Students</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">id</th>
-              <th scope="col">Student Name</th>
-              <th scope="col">Student Age</th>
-              <th scope="col">Email address</th>
-              <th scope="col">Track Name</th>
-              <th scope="col">Options</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for student in students %}
-            <tr>
-              <th scope="row">{{student.id}}</th>
-              <td>{{student.studentname}}</td>
-              <td>{{student.studentemail}}</td>
-              <td>{{student.studentage}}</td>
-              <td>{{student.trackname}}</td>
-              <td>
-
-              </td>
-            </tr>
-            {%endfor%}
-          </tbody>
-        </table>
-    </div>
-    {%endif%}
     {% endblock content %}
 </body>
-</html>

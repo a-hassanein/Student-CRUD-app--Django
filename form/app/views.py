@@ -1,6 +1,12 @@
 from django.shortcuts import render ,redirect
 from .models import Myuser, Student
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as authlogin, logout
 # Create your views here.
+def mylogout(request):
+    logout(request)
+    return render(request, 'login/login.html')
+
 
 def home(request):
     return render(request, 'pages/home.html')
@@ -11,7 +17,10 @@ def login(request):
 
     else:
         user = Myuser.objects.filter(userPass=request.POST['userPass'], userEmail=request.POST['userEmail'])
-        if ( len(user) > 0 ):
+        authuser = authenticate(userEmail=request.POST['userEmail'], userPass=request.POST['userPass'])
+        if ( len(user) > 0  and authuser is not None):
+            request.session['username'] = request.POST['username']
+            authlogin(request, authuser)
             return render(request, 'pages/home.html')
         else:
             context = {}
@@ -24,47 +33,45 @@ def signup(request):
         return render(request, 'pages/signup.html')
 
     else:
-        Myuser.objects.create(username=request.POST['myusername'], userPass=request.POST['userPass'], userEmail=request.POST['userEmail'])
+        Myuser.objects.create(username=request.POST['username'], userPass=request.POST['userPass'], userEmail=request.POST['userEmail'])
+        # User.objects.create_user(username=request.POST['myusername'], userPass=request.POST['userPass'], is_staff=True)
         return render(request, 'pages/login.html')
 
 def insert_student(request):
     context = {}
+    context['ID'] = 1
     if (request.method == 'GET'):
         return render(request, 'pages/home.html')
 
     else:
         Student.objects.create(studentname=request.POST['studentname'], studentemail=request.POST['studentemail'], studentage=request.POST['studentage'], trackname=request.POST['trackname'])
+        students = Student.objects.all()
+        context['students'] = students
         context['doneMsg'] = 'student inserted sucessfully'
         return render(request, 'pages/home.html', context)
 
+def delete_student(req,id):
+    context = {}
+    Student.objects.filter(id=id).delete()
+    students = Student.objects.all()
+    context['students'] = students
+    return render(req, 'pages/studentlist.html', context)
 
-# def insert_student(request):
-#     if request.method == 'POST':
-#         context = {}
-#         studentname = request.POST['studentname']
-#         studentage = request.POST['studentage']
-#         studentemail = request.POST['studentemail']
-#         trackname = request.POST['trackname']
-#
-#         try:
-#             Student.objects.create(studentname=studentname, studentemail=studentemail,
-#                                    studentage=studentage, track_name=trackname)
-#             context['doneMsg'] = 'student inserted sucessfully'
-#         except:
-#             context['doneMsg'] = 'failed to insert student :('
-#
-#         students = Student.objects.all()
-#         context['students'] = students
-#         return render(request, 'pages/home.html', context)
-#     # else:
-#     #     index_students(request)
-#
-#     def index_students(request):
-#         if request.method == 'GET':
-#             context = {}
-#             students = Student.objects.all()
-#             print(students)
-#             context['students'] = students
-#             return render(request, 'pages/home.html', context)
-#         else:
-#             insert_student(request)
+def list_students(req):
+    context={}
+    students = Student.objects.all()
+    context['students'] = students
+    return render(req, 'pages/studentlist.html', context)
+
+def update_student(request,id):
+    if request.method == 'POST':
+        newstudentname = request.POST.get('newstudentname')
+        student = Student.objects.get(id=id)
+        if student:
+            student.studentname = newstudentname
+            student.save()
+            return render(request, 'pages/home.html')
+        else:
+            return render(request, 'pages/studentlist.html')
+    else:
+        return render(request, 'pages/studentlist.html')
