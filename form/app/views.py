@@ -1,8 +1,16 @@
 from django.shortcuts import render ,redirect
-from .models import Myuser, Student
+from .models import Myuser, Student, Track
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as authlogin, logout
+from django.views import View
+from .forms import insert_student1, insert_student2
+from django.views.generic import ListView
+
 # Create your views here.
+class TrackList(ListView):
+    model = Track
+
+
 def mylogout(request):
     logout(request)
     return render(request, 'login/login.html')
@@ -108,3 +116,32 @@ def update_student(request,id):
             return render(request, 'pages/studentlist.html')
     else:
         return render(request, 'pages/studentlist.html')
+
+class InsertStudent1(View):
+    def get(self, request):
+        context = {}
+        form = insert_student1()
+        context['form'] = form
+        return render(request, 'pages/insertform.html', context)
+
+    def post(self, request):
+        context={}
+        Student.objects.create(studentname=request.POST['studentname'], studentemail=request.POST['studentemail'],studentage=request.POST['studentage'], trackname=request.POST['trackname'])
+        students = Student.objects.all()
+
+        return render(request, 'pages/insertform.html', context)
+
+class InsertStudent2(View):
+    def get(self,request):
+        context = {}
+        form2 = insert_student2()
+        context['form2'] = form2
+        return render(request, 'pages/insertform2.html', context)
+
+    def post(self,request):
+        context={}
+        afterpostform = insert_student2(request.POST)
+        afterpostform.save()
+        return render(request, 'pages/insertform2.html', context)
+
+

@@ -14,3 +14,6 @@ class Myuser(models.Model):
     myusername = models.CharField(max_length=100, null=True)
     userEmail = models.EmailField(max_length=100, null=True)
     userPass = models.CharField(max_length=15, null=True)
+
+class Track(models.Model):
+    trackname = models.CharField(max_length=20)
