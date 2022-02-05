@@ -1,3 +1,3 @@
 # Student-CRUD-app--Django
-lab3 finished 
+lab 1 & lab 2 & lab3 & lab4 finished
 
